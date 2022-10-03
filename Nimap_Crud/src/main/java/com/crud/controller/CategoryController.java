@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crud.model.Category;
@@ -18,11 +19,15 @@ public class CategoryController
 //autowire the CategoryService class
 @Autowired
 CategoryService categoryService;
+
+
 //creating a get mapping that retrieves all the category detail from the database 
 @GetMapping("/api/categories")
-private List<Category> getAllCategory() 
+private List<Category> getAllCategory(@RequestParam(value = "page", defaultValue = "0") String page) 
 {
-return categoryService.getAllCategory();
+	int pageNo=Integer.parseInt(page);
+	return categoryService.findPaginated(pageNo);
+//return categoryService.getAllCategory();
 }
 //creating a get mapping that retrieves the detail of a specific category
 @GetMapping("/api/categories/{categoryid}")

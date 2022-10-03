@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 //mark class as an Entity 
 @Entity
 //defining class name as Table name
@@ -19,8 +20,19 @@ public class Product
 	@Column
 	private String productName;
 
-
-
+/*
+	@Column
+	private Integer catId;
+	
+	@Column 
+	public Integer num;
+	
+	*/
+	@ManyToOne
+	@JoinColumn(name = "categ_id")
+	private Category productCategory;
+	
+	
 	public int getProductid() 
 	{
 		return productId;
@@ -38,6 +50,27 @@ public class Product
 	{
 		this.productName = productName;
 	}
+	
+	public Category getProductCategory()
+	{
+		return productCategory;
+	}
+	public void setProductCategory(Category newCategory) 
+	{
+		this.productCategory = newCategory;
+	}
+
+	/*
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+	
+	*/
+	
 
 
 

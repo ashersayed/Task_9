@@ -2,8 +2,12 @@ package com.crud.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.crud.model.Category;
 import com.crud.model.Product;
 import com.crud.repository.ProductRepository;
 //defining the business logic
@@ -12,6 +16,16 @@ public class ProductService
 {
 @Autowired
 ProductRepository productRepository;
+
+
+public List<Product> findPaginated(int pageNo) {
+
+    Pageable paging = PageRequest.of(pageNo,2);
+    Page<Product> pagedResult = productRepository.findAll(paging);
+
+    return pagedResult.toList();
+}
+
 //getting all product record by using the method findaAll() of CrudRepository
 public List<Product> getAllProduct() 
 {

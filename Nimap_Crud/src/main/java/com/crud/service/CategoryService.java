@@ -2,17 +2,34 @@ package com.crud.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.crud.model.Category;
 import com.crud.repository.CategoryRepository;
 //defining the business logic
+
 @Service
 public class CategoryService 
 {
+	
+	
+	
 @Autowired
 CategoryRepository categoryRepository;
 //getting all category record by using the method findaAll() of CrudRepository
+
+
+public List<Category> findPaginated(int pageNo) {
+
+    Pageable paging = PageRequest.of(pageNo,2);
+    Page<Category> pagedResult = categoryRepository.findAll(paging);
+
+    return pagedResult.toList();
+}
+
 public List<Category> getAllCategory() 
 {
 List<Category> category = new ArrayList<Category>();

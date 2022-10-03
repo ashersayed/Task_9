@@ -7,23 +7,47 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crud.model.Product;
+import com.crud.model.Product;
+import com.crud.service.ProductService;
 import com.crud.service.ProductService;
 //mark class as Controller
 @RestController
 public class ProductController 
 {
-//autowire the ProductService class
+	
+	
+
 @Autowired
+
 ProductService productService;
+
+
+//autowire the ProductService class
+
+
 //creating a get mapping that retrieves all the product detail from the database 
+
+@GetMapping("/api/products")
+private List<Product> getAllProduct(@RequestParam(value = "page", defaultValue = "0") String page) 
+{
+	int pageNo=Integer.parseInt(page);
+	return productService.findPaginated(pageNo);
+//return productService.getAllProduct();
+}
+
+
+/*
 @GetMapping("/api/products")
 private List<Product> getAllProduct() 
 {
 return productService.getAllProduct();
 }
+
+*/
 //creating a get mapping that retrieves the detail of a specific product
 @GetMapping("/api/products/{productid}")
 private Product getProduct(@PathVariable("productid") int productid) 
@@ -40,6 +64,14 @@ productService.delete(productid);
 @PostMapping("/api/products")
 private int saveProduct(@RequestBody Product product) 
 {
+	
+	//System.out.println(product.getCatId());
+	//System.out.println(product.num);
+
+//Product c=	productService.getProductById(product.getCatId());
+
+//product.setProductProduct(c);
+
 productService.saveOrUpdate(product);
 return product.getProductid();
 }
